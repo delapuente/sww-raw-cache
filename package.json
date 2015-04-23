@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "Middleware used in ServiceWorkersWare that allows developers to control the cache content via http verbs",
   "main": "dist/sww-raw-cache.js",
-  "scripts": {
-    "postinstall": "bower install && gulp"
-  },
   "author": "The Gaia team",
   "license": "MPL",
   "devDependencies": {
