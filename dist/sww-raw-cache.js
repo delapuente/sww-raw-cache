@@ -4,7 +4,7 @@ var RawCache = require('./lib/sww-raw-cache.js');
 self.RawCache = RawCache;
 
 },{"./lib/sww-raw-cache.js":2}],2:[function(require,module,exports){
-/* global Response, Request */
+/* global Response, Request, Promise */
 'use strict';
 
 var CacheHelper = require('sw-cache-helper');
@@ -41,6 +41,10 @@ RawCache.prototype.SUPPORTED_ACTIONS = ['get', 'post', 'put', 'delete'];
  * @param {Response} the response object.
  */
 RawCache.prototype.onFetch = function onFetch(request, response) {
+  if (response) {
+    return Promise.resolve(response);
+  }
+
   var method = request.method.toLowerCase();
   if (this.SUPPORTED_ACTIONS.indexOf(method) === -1) {
     // Method not supported, just bypass the request and do nothing
