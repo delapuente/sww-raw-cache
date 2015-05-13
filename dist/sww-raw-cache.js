@@ -63,7 +63,22 @@ RawCache.prototype.onFetch = function onFetch(request, response) {
     return null;
   }
 
+  request = this.preprocessRequest(request);
   return this[method].apply(this, [request, response]);
+};
+
+/**
+ * Preprocess the request taking into account the matching options.
+ * @param {Request} the request object.
+ */
+RawCache.prototype.preprocessRequest = function (request) {
+  if (this.matchOptions.ignoreSearch) {
+    var url = new URL(request.url);
+    url.search = '';
+    request = new Request(url.href, request);
+  }
+  //TODO: Implement the rest of match options
+  return request;
 };
 
 /**
