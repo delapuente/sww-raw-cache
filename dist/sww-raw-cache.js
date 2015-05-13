@@ -94,7 +94,7 @@ RawCache.prototype.post = function post(request) {
      self.DEFAULT_CONTENT_TYPE;
     var response = new Response(content, {
       'headers': {
-      	'x-sww-raw-cache': Date.now(),
+      	'x-sww-raw-cache': self.cacheName + '; ' + Date.now(),
       	'Content-Type': contentType
       }
     });
