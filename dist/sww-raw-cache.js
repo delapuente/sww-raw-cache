@@ -63,8 +63,9 @@ RawCache.prototype.onFetch = function onFetch(request, response) {
     return null;
   }
 
-  request = this.preprocessRequest(request);
-  return this[method].apply(this, [request, response]);
+  return this.preprocessRequest(request).then(function (request) {
+    return this[method].apply(this, [request, response]);
+  }.bind(this));
 };
 
 /**
@@ -72,13 +73,26 @@ RawCache.prototype.onFetch = function onFetch(request, response) {
  * @param {Request} the request object.
  */
 RawCache.prototype.preprocessRequest = function (request) {
-  if (this.matchOptions.ignoreSearch) {
-    var url = new URL(request.url);
-    url.search = '';
-    request = new Request(url.href, request);
-  }
-  //TODO: Implement the rest of match options
-  return request;
+  var clone = request.clone();
+  return clone.blob().then(function (body) {
+    if (['GET', 'HEAD'].indexOf(request.method) >= 0) {
+      body = undefined;
+    }
+    if (this.matchOptions.ignoreSearch) {
+      var url = new URL(request.url);
+      url.search = '';
+      request = new Request(url.href, {
+        method: request.method,
+        headers: request.headers,
+        body: body,
+        mode: request.mode,
+        credentials: request.credentials,
+        cache: request.cache
+      });
+    }
+    //TODO: Implement the rest of match options
+    return Promise.resolve(request);
+  }.bind(this));
 };
 
 /**
