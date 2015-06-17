@@ -1,9 +1,9 @@
 {
   "name": "sww-raw-cache",
-  "version": "0.0.1",
-  "description": "Middleware used in ServiceWorkersWare that allows developers to control the cache content via http verbs",
+  "version": "0.2.0",
+  "description": "Middleware used in ServiceWorkerWare that allows developers to control the cache content via http verbs",
   "main": "dist/sww-raw-cache.js",
-  "author": "The Gaia team",
+  "author": "The Gaia Team",
   "license": "MPL",
   "devDependencies": {
     "browserify": "^9.0.3",
@@ -14,8 +14,5 @@
     "gulp-webserver": "^0.9.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0"
-  },
-  "dependencies": {
-    "sw-cache-helper": "git+https://git@github.com/arcturus/sw-cache-helper.git"
   }
 }
